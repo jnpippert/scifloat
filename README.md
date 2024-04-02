@@ -1,2 +1,4 @@
 # scifloat
-Alternative to conventional floats used for scientific measurements,
+Alternative to conventional floats used for scientific measurements.
+
+
