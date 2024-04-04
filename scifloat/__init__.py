@@ -1,6 +1,6 @@
 from typing import SupportsFloat, SupportsIndex, SupportsInt
 
-from typing_extensions import Buffer, LiteralString, TypeAlias
+from typing_extensions import Buffer, TypeAlias
 
 ReadableBuffer: TypeAlias = Buffer
 ConvertibleToInt: TypeAlias = str | ReadableBuffer | SupportsInt | SupportsIndex
@@ -9,5 +9,4 @@ ConvertibleToList: TypeAlias = (
     str | tuple | list | ReadableBuffer | SupportsFloat | SupportsIndex
 )
 
-Tuple: TypeAlias = tuple[float, float] | tuple[int, int]
 __all__ = [n for n in globals()]
