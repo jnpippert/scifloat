@@ -70,6 +70,9 @@ class scifloat:
         rdx = round_uncertainties(self.dx.copy())
         if any(list(map(lambda x: "." in x, rdx))):
             ndigits = min(map(lambda x: len(x.split(".")[-1]), rdx))
+        else:
+            ndigits = -max(map(lambda x: len(x) - len(x.rstrip("0")), rdx))
+
         rx = round_value(self.x, ndigits)
         self.rx = float(rx)
         self.rdx = list(map(float, rdx))

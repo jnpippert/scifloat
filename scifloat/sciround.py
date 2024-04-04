@@ -107,6 +107,8 @@ def round_value(__x: ConvertibleToFloat, __ndigits: int) -> float:
     1.32
     """
     # need to remove computation bug with floating points
-    __x = math.floor(__x * 10 ** (__ndigits + 1)) / 10 ** (__ndigits + 1)
-    # even rounding, i.e., statistically correct
-    return round(__x * 10**__ndigits) / 10**__ndigits
+    if not __ndigits < 0:
+        __x = math.floor(__x * 10 ** (__ndigits + 1)) / 10 ** (__ndigits + 1)
+        # even rounding, i.e., statistically correct
+        return round(__x * 10**__ndigits) / 10**__ndigits
+    return round(int(__x), __ndigits)
