@@ -21,8 +21,8 @@ classifiers = [
 
 
 [project.urls]
-"Homepage" = "https://github.com/jnpippert/streamPy"
-"Bug Tracker" = "https://github.com/jnpippert/streamPy/issues"
+"Homepage" = "https://github.com/jnpippert/scifloat"
+"Bug Tracker" = "https://github.com/jnpippert/scifloat/issues"
 
 [tool.setuptools.packages.find]
 exclude = ["sample_images*","*fits","test.py","*txt"]

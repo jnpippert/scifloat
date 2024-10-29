@@ -2,7 +2,7 @@
 Module that contains the ``scifloat`` class.
 """
 
-from typing import NoReturn
+from typing import NoReturn, Self
 
 from . import ConvertibleToFloat, ConvertibleToList
 from .sciround import round_uncertainties, round_value
@@ -45,7 +45,7 @@ class scifloat:
     (Not implemented yet!)
     """
 
-    def __new__(cls, __x: ConvertibleToFloat, __dx: ConvertibleToList) -> "scifloat":
+    def __new__(cls, __x: ConvertibleToFloat, __dx: ConvertibleToList) -> Self:
         return super().__new__(cls)
 
     def __init__(self, __x: ConvertibleToFloat, __dx: ConvertibleToList) -> NoReturn:
@@ -66,7 +66,7 @@ class scifloat:
             return f"{self.sx} \u00b1 {self.sdx[0]}"
         return f"{self.sx} +{self.sdx[0]} | -{self.sdx[1]}"
 
-    def __round__(self, ndigits: None = None) -> "scifloat":
+    def __round__(self, ndigits: None = None) -> Self:
         rdx = round_uncertainties(self.dx.copy())
         if any(list(map(lambda x: "." in x, rdx))):
             ndigits = min(map(lambda x: len(x.split(".")[-1]), rdx))
