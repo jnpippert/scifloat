@@ -30,12 +30,18 @@ def _float_to_str(__x: ConvertibleToFloat):
 
 
 def _order_of_magnitude(__x: ConvertibleToFloat):
+    """
+    Returns the order of magnitude of a given number.
+    """
     if __x == 0:
         return __x
     return math.floor(math.log(__x, 10))
 
 
 def _significant_numbers(__x: ConvertibleToFloat):
+    """
+    Returns the count of the significant digits.
+    """
     __s = _float_to_str(__x)
     if __s[0] in ["1", "2"]:
         return 2
@@ -81,7 +87,11 @@ def _round_uncertainty(__x):
     return _number_to_str(xround, nsig, mag)
 
 
-def round_uncertainties(__dx: ConvertibleToList) -> list:
+def _digit_round_uncertainty(_x, __ndigits: int):
+    return math.ceil(_x * 10**__ndigits) / 10**__ndigits
+
+
+def round_uncertainties(__dx: ConvertibleToList, __ndigits: int = None) -> list:
     """
     Returns the, by Scientific rules, rounded uncertainties.
     """
@@ -90,7 +100,13 @@ def round_uncertainties(__dx: ConvertibleToList) -> list:
     if isinstance(__dx, tuple):
         __dx = list(__dx)
     for i, dx in enumerate(__dx):
-        __dx[i] = _round_uncertainty(dx)
+        if isinstance(__ndigits, int):
+            __dx[i] = _digit_round_uncertainty(dx, __ndigits)
+        else:
+            res = _round_uncertainty(dx)
+            if res[-1] == "1":
+                res = _round_uncertainty(float(res))
+            __dx[i] = res
     return __dx
 
 

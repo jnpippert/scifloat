@@ -72,11 +72,25 @@ class scifloat:
             ndigits = min(map(lambda x: len(x.split(".")[-1]), rdx))
         else:
             ndigits = -max(map(lambda x: len(x) - len(x.rstrip("0")), rdx))
-
+        rdx = round_uncertainties(self.dx.copy(), ndigits)
         rx = round_value(self.x, ndigits)
-        self.rx = float(rx)
-        self.rdx = list(map(float, rdx))
         self.sx = rx
         self.sdx = rdx
-        print(self)
+        if ndigits != 0:
+            self.rx = float(rx)
+            self.rdx = list(map(float, rdx))
+        else:
+            self.rx = int(rx)
+            self.rdx = list(map(int, rdx))
         return self
+
+    @staticmethod
+    def _test(test: dict[list[list]]):
+        for test_no, val in test.items():
+            s = round(scifloat(val[0][0], val[0][1]))
+            is_equal = all([s.rx == val[1][0], s.rdx == val[1][1]])
+            result = "SUCCESSFULL" if is_equal else "FAILED"
+            sign = f"{"=" if is_equal else "!"}="
+            print(
+                f"{test_no} {result}: {val[0][0]} +- {val[0][1]} -> {val[1][0]} +- {val[1][1]} {sign} {s.rx} +- {s.rdx}"
+            )
